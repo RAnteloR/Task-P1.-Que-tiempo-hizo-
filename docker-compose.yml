@@ -1,0 +1,24 @@
+# PostgreSQL para el apartado 4.7 del notebook (la tabla se carga desde el notebook con to_sql).
+# Las credenciales se leen del fichero .env de esta carpeta (ver .env.example).
+# Levantar desde la raíz del proyecto:  docker compose up -d
+# Parar:                               docker compose down      (añadir -v para borrar también los datos)
+services:
+  postgres:
+    image: postgres:16
+    container_name: meteo-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?Falta POSTGRES_USER en .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta POSTGRES_PASSWORD en .env}
+      POSTGRES_DB: ${POSTGRES_DB:?Falta POSTGRES_DB en .env}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - datos_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  datos_postgres:
