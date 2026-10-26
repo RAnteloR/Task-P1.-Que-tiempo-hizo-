@@ -22,7 +22,7 @@ Variables: temperatura media, mínima y máxima (°C), humedad relativa (%), pre
 ├── requirements.txt
 ├── .gitignore
 ├── .env.example         # plantilla de credenciales (el .env real no se sube)
-├── docker-compose.yml   # PostgreSQL para el apartado 4.7
+├── docker-compose.yml   # PostgreSQL para el paso 10 del notebook
 ├── datos/
 │   ├── raw/             # fichero original, tal como se descarga (latin-1)
 │   └── clean/           # datos limpios (UTF-8)

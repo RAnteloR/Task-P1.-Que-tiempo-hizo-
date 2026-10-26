@@ -1,4 +1,4 @@
-# PostgreSQL para el apartado 4.7 del notebook (la tabla se carga desde el notebook con to_sql).
+# PostgreSQL para el paso 10 del notebook (la tabla se carga desde el notebook con to_sql).
 # Las credenciales se leen del fichero .env de esta carpeta (ver .env.example).
 # Levantar desde la raíz del proyecto:  docker compose up -d
 # Parar:                               docker compose down      (añadir -v para borrar también los datos)
