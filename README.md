@@ -36,7 +36,7 @@ Variables: temperatura media, mínima y máxima (°C), humedad relativa (%), pre
 - **Fuente original:** [Meteostat](https://meteostat.net/). El fichero de la práctica simula la exportación de un portal de datos y ha sido **modificado con fines didácticos** para incluir problemas de calidad.
 - **URL de descarga:** <https://raw.githubusercontent.com/bigdatawirtz/datasets/main/datasets/meteo_alvedro_2021_2025.csv>
 - **Condiciones de uso:** los datos de Meteostat se publican bajo licencia [Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/): se pueden usar y modificar citando la fuente y sin fines comerciales. Ver <https://dev.meteostat.net/terms.html>.
-- **Fecha de descarga:** _AAAA-MM-DD_ (el notebook la imprime en el paso 1).
+- **Fecha de descarga:** 2026-10-26 (el notebook la imprime en el paso 1).
 
 ## Cómo ejecutar el proyecto
 
@@ -102,7 +102,7 @@ Si se cambia la contraseña después de haber levantado el contenedor, hay que b
 | 7 | Valores ausentes como `-9999` (14 valores) | `describe()` muestra un mínimo de -9999 | `na_values=['NA', '-9999']` |
 | 8 | Fechas en dos formatos: `DD/MM/AAAA` en el segundo semestre de 2023 (164 filas) | Algunas fechas no se convierten con el formato `AAAA-MM-DD` | Convertir cada formato por separado |
 | 9 | Filas desordenadas al final del fichero | Últimas líneas del fichero; `is_monotonic_increasing` es `False` | Ordenar por fecha |
-| 10 | 13 filas duplicadas | `duplicated()` | `drop_duplicates()` |
+| 10 | 13 filas duplicadas: 8 exactas y 5 fechas repetidas con temperaturas distintas | `duplicated()` y `duplicated()` sobre la fecha | `drop_duplicates()` y después una sola fila por fecha (la primera; la copia del final del fichero se descarta) |
 | 11 | 27 días que faltan (21 seguidos del 03/07/2023 al 23/07/2023) | Comparación con un calendario completo | Se añaden como filas vacías; no se inventan valores |
 | 12 | Temperaturas que no encajan (por ejemplo, máxima de 39,2 °C el 19/03/2024 con media de 10,6 °C) | Gráfica antes de limpiar; la media se aleja más de 6 °C de `(tmin + tmax) / 2` | Se anulan las tres temperaturas de esos días |
 | 13 | Valores fuera de rango (humedad fuera de 0–100, lluvia negativa, mínima mayor que máxima) | Comprobación sencilla de cada condición | No aparece ninguno |
@@ -119,3 +119,13 @@ Si se cambia la contraseña después de haber levantado el contenedor, hay que b
 - **Día de lluvia:** precipitación ≥ 1,0 mm.
 - **Día más cálido / más frío:** según la temperatura máxima / mínima.
 - **Pregunta nueva en SQL:** número de días de calor (máxima ≥ 25 °C) por año.
+
+## Uso de IA
+
+Se ha usado **Claude Code** (Anthropic) como ayuda en:
+
+- **Revisión del código:** localizar errores al ejecutar el notebook (por ejemplo, las fechas repetidas con valores distintos que impedían completar el calendario) y proponer la corrección.
+- **Gráficas:** sugerencias para que las tres figuras tengan título, ejes y unidades claros.
+- **Documentación:** repaso del README y de la tabla de decisiones de limpieza.
+
+Las decisiones de limpieza (tratamiento de nulos, duplicados y valores incoherentes) se han revisado y justificado por el autor, y el notebook se ha ejecutado completo para comprobar los resultados.
