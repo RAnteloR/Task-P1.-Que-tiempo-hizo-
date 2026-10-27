@@ -6,3 +6,9 @@ venv/
 .env
 !.env.example
 .DS_Store
+
+# Datos (no versionar)
+datos/raw/*
+datos/clean/*
+!datos/raw/.gitkeep
+!datos/clean/.gitkeep
