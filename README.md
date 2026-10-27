@@ -43,7 +43,7 @@ Variables: temperatura media, mínima y máxima (°C), humedad relativa (%), pre
 1. Clonar el repositorio y entrar en la carpeta.
 2. Crear y activar un entorno virtual (opcional pero recomendable):
    ```bash
-   python -m venv .venv
+   python3 -m venv .venv
    # Windows
    .venv\Scripts\activate
    # Linux / macOS
