@@ -103,16 +103,16 @@ Si se cambia la contraseña después de haber levantado el contenedor, hay que b
 | 8 | Fechas en dos formatos: `DD/MM/AAAA` en el segundo semestre de 2023 (164 filas) | Algunas fechas no se convierten con el formato `AAAA-MM-DD` | Convertir cada formato por separado |
 | 9 | Filas desordenadas al final del fichero | Últimas líneas del fichero; `is_monotonic_increasing` es `False` | Ordenar por fecha |
 | 10 | 13 filas duplicadas: 8 exactas y 5 fechas repetidas con temperaturas distintas | `duplicated()` y `duplicated()` sobre la fecha | `drop_duplicates()` y después una sola fila por fecha (la primera; la copia del final del fichero se descarta) |
-| 11 | 27 días que faltan (21 seguidos del 03/07/2023 al 23/07/2023) | Comparación con un calendario completo | Se añaden como filas vacías; no se inventan valores |
+| 11 | 27 días que faltan (21 seguidos del 03/07/2023 al 23/07/2023) | Comparación con un calendario completo | Se añaden como filas vacías y después se rellenan con la media del mismo día del año en los demás años (todas las variables salvo `prec`); la columna `imputado` marca esas filas |
 | 12 | Temperaturas que no encajan (por ejemplo, máxima de 39,2 °C el 19/03/2024 con media de 10,6 °C) | Gráfica antes de limpiar; la media se aleja más de 6 °C de `(tmin + tmax) / 2` | Se anulan las tres temperaturas de esos días |
 | 13 | Valores fuera de rango (humedad fuera de 0–100, lluvia negativa, mínima mayor que máxima) | Comprobación sencilla de cada condición | No aparece ninguno |
 
 ### Valores ausentes
 
-- **No se rellenan:** son pocos (alrededor del 1 % por variable) y rellenarlos sería inventar datos.
+- **Valores sueltos ausentes:** no se rellenan, son pocos (alrededor del 1 % por variable) y rellenarlos sería inventar datos. Se dejan como `NaN` / `NULL`: pandas y SQL los ignoran en medias y sumas, así que los resultados coinciden.
 - **No se borran las filas**, para no perder las demás variables de ese día.
-- Se dejan como `NaN` / `NULL`: pandas y SQL los ignoran en medias y sumas, así que los resultados coinciden.
-- Julio de 2023 está casi vacío, así que su total de lluvia sale más bajo de lo real.
+- **Días completos que faltan (27):** se rellenan con la media del mismo día del año en los demás años, para que no queden huecos en las gráficas (sobre todo el de julio de 2023). Se hace después de anular los errores del apartado anterior, para que esas medias no usen valores erróneos. La columna `imputado` indica qué filas no son medidas reales.
+- **`prec` no se rellena:** la lluvia de un día no se parece a la de otros años y una media inventaría días de lluvia. Julio de 2023 está casi vacío en lluvia, así que su total sale más bajo de lo real.
 
 ## Criterios del análisis
 
